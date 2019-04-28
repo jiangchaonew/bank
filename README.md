@@ -11,6 +11,3 @@ url = http://preview.airwallex.com:30001/bank 在config.properties文件中配�
 * 运行mvn clean test -DsuiteXmlFile=testng.xml
 * 等待执行结束，查看测试报告
 * 在测试用例.xlsx中记录测试发现的问题
-
-## 下载
-https://github.com/jiangchaonew/bank/archive/1.0.0.zip
