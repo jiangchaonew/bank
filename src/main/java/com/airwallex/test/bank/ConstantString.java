@@ -22,7 +22,7 @@ public class ConstantString {
 
     public static final String AU_ACCOUNT_NUMBER = "Length of account_number should be between 6 and 9 when bank_country_code is 'AU'";
 
-    public static final String CN_ACCOUNT_NUMBER = "Length of account_number should be between 8 and 20 when bank_country_code is 'US'";
+    public static final String CN_ACCOUNT_NUMBER = "Length of account_number should be between 8 and 20 when bank_country_code is 'CN'";
 
     public static final String BANK_COUNTRY_CODE = "'bank_country_code' is required, and should be one of 'US', 'AU', or 'CN'";
 
