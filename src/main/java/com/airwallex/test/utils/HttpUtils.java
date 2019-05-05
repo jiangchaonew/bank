@@ -1,8 +1,9 @@
 package com.airwallex.test.utils;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
+import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
+import kong.unirest.Unirest;
+import kong.unirest.UnirestException;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -12,34 +13,40 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class HttpUtils {
 
-    public static HttpResponse<String> postJson(String url, String req) {
-        log.info("===> http request: {}", req);
-        HttpResponse<String> response = null;
+    public static HttpResponse<JsonNode> postJson(String url, String req) {
+        log.info("===> http request body: {}", req);
+        HttpResponse<JsonNode> response = null;
         try {
             response = Unirest.post(url)
                     .header("content-type", "application/json")
                     .header("accept", "application/json")
                     .body(req)
-                    .asString();
+                    .asJson();
+            log.info("===> http response body: {}", response.getBody());
         } catch (UnirestException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            log.error("===> http response body is null");
         }
-        log.info("===> http response: {}", response.getBody());
         return response;
     }
     
-    public static HttpResponse<String> postForm(String url, String req) {
-        log.info("===> http request: {}", req);
-        HttpResponse<String> response = null;
+    public static HttpResponse<JsonNode> postForm(String url, String req) {
+        log.info("===> http request body: {}", req);
+        HttpResponse<JsonNode> response = null;
         try {
             response = Unirest.post(url)
                     .header("content-type", "application/x-www-form-urlencoded")
                     .body(req)
-                    .asString();
+                    .asJson();
+            log.info("===> http response body: {}", response.getBody());
         } catch (UnirestException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            log.error("===> http response body is null");
         }
-        log.info("===> http response: {}", response.getBody());
         return response;
     }
 }

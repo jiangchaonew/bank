@@ -23,8 +23,8 @@ public class GenerateRadom {
             // 获取低位值
             lowPos = (161 + Math.abs(random.nextInt(93)));
             byte[] b = new byte[2];
-            b[0] = (new Integer(hightPos).byteValue());
-            b[1] = (new Integer(lowPos).byteValue());
+            b[0] = (byte) hightPos;
+            b[1] = (byte) lowPos;
             try {
                 // 转成中文
                 str = new String(b, "GBK");

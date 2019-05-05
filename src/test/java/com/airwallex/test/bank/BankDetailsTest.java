@@ -3,8 +3,9 @@ package com.airwallex.test.bank;
 import com.airwallex.test.utils.GenerateRadom;
 import com.airwallex.test.utils.HttpUtils;
 import com.airwallex.test.utils.JsonUtils;
-import com.mashape.unirest.http.HttpResponse;
 import com.neovisionaries.i18n.CountryCode;
+import kong.unirest.HttpResponse;
+import kong.unirest.JsonNode;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,10 +37,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(GenerateRadom.getRandomStringAndNumber(9));
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_OK, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("success").toString();
+        String message = response.getBody().getObject().getString("success");
         Assert.assertTrue(message.contains(ConstantString.BANK_DETAILS_SAVED), "消息内容");
     }
 
@@ -55,10 +56,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(GenerateRadom.getRandomStringAndNumber(6));
         bankDetails.setAba(random.nextInt(2) % 2 == 0 ? "" : null);
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_OK, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("success").toString();
+        String message = response.getBody().getObject().getString("success");
         Assert.assertTrue(message.contains(ConstantString.BANK_DETAILS_SAVED), "消息内容");
     }
 
@@ -74,10 +75,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(random.nextInt(2) % 2 == 0 ? "" : null);
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_OK, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("success").toString();
+        String message = response.getBody().getObject().getString("success");
         Assert.assertTrue(message.contains(ConstantString.BANK_DETAILS_SAVED), "消息内容");
     }
 
@@ -93,10 +94,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(GenerateRadom.getRandomStringAndNumber(9));
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_OK, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("success").toString();
+        String message = response.getBody().getObject().getString("success");
         Assert.assertTrue(message.contains(ConstantString.BANK_DETAILS_SAVED), "消息内容");
     }
 
@@ -112,10 +113,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(GenerateRadom.getRandomStringAndNumber(6));
         bankDetails.setAba(random.nextInt(2) % 2 == 0 ? "" : null);
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_OK, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("success").toString();
+        String message = response.getBody().getObject().getString("success");
         Assert.assertTrue(message.contains(ConstantString.BANK_DETAILS_SAVED), "消息内容");
     }
 
@@ -131,10 +132,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(random.nextInt(2) % 2 == 0 ? "" : null);
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_OK, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("success").toString();
+        String message = response.getBody().getObject().getString("success");
         Assert.assertTrue(message.contains(ConstantString.BANK_DETAILS_SAVED), "消息内容");
     }
 
@@ -150,10 +151,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(GenerateRadom.getRandomStringAndNumber(9));
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.REQUIRED_PAYMENT_METHOD), "消息内容");
     }
 
@@ -169,10 +170,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(GenerateRadom.getRandomStringAndNumber(9));
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.REQUIRED_PAYMENT_METHOD), "消息内容");
     }
 
@@ -188,10 +189,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(GenerateRadom.getRandomStringAndNumber(9));
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.BANK_COUNTRY_CODE), "消息内容");
     }
 
@@ -207,10 +208,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(GenerateRadom.getRandomStringAndNumber(9));
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.BANK_COUNTRY_CODE), "消息内容");
     }
 
@@ -226,10 +227,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(GenerateRadom.getRandomStringAndNumber(9));
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.LENGTH_ACCOUNT_NAME), "消息内容");
     }
 
@@ -245,10 +246,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(GenerateRadom.getRandomStringAndNumber(9));
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.REQUIRED_ACCOUNT_NAME), "消息内容");
     }
 
@@ -264,10 +265,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(GenerateRadom.getRandomStringAndNumber(9));
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.REQUIRED_ACCOUNT_NUMBER), "消息内容");
     }
 
@@ -283,10 +284,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(random.nextInt(2) % 2 == 0 ? "" : null);
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.REQUIRED_ABA), "消息内容");
     }
 
@@ -302,10 +303,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(GenerateRadom.getRandomStringAndNumber(10));
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.LENGTH_ABA), "消息内容");
     }
 
@@ -321,10 +322,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(GenerateRadom.getRandomStringAndNumber(9));
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.US_ACCOUNT_NUMBER), "消息内容");
     }
 
@@ -340,10 +341,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(random.nextInt(2) % 2 == 0 ? "" : null);
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.REQUIRED_BSB), "消息内容");
     }
 
@@ -359,10 +360,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(GenerateRadom.getRandomStringAndNumber(5));
         bankDetails.setAba(random.nextInt(2) % 2 == 0 ? "" : null);
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.LENGTH_BSB), "消息内容");
     }
 
@@ -378,10 +379,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(GenerateRadom.getRandomStringAndNumber(6));
         bankDetails.setAba(random.nextInt(2) % 2 == 0 ? "" : null);
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.AU_ACCOUNT_NUMBER), "消息内容");
     }
 
@@ -397,10 +398,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(random.nextInt(2) % 2 == 0 ? "" : null);
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.CN_ACCOUNT_NUMBER), "消息内容");
     }
 
@@ -416,10 +417,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(random.nextInt(2) % 2 == 0 ? "" : null);
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.REQUIRED_ABA), "消息内容");
     }
 
@@ -435,10 +436,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(GenerateRadom.getRandomStringAndNumber(9));
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.REQUIRED_SWIFT_CODE), "消息内容");
     }
 
@@ -454,10 +455,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(GenerateRadom.getRandomStringAndNumber(9));
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.LENGTH_SWIFT_CODE), "消息内容");
     }
 
@@ -473,10 +474,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(random.nextInt(2) % 2 == 0 ? "" : null);
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.REQUIRED_BSB), "消息内容");
     }
 
@@ -492,10 +493,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(GenerateRadom.getRandomStringAndNumber(6));
         bankDetails.setAba(random.nextInt(2) % 2 == 0 ? "" : null);
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.REQUIRED_SWIFT_CODE), "消息内容");
     }
 
@@ -511,10 +512,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(GenerateRadom.getRandomStringAndNumber(6));
         bankDetails.setAba(random.nextInt(2) % 2 == 0 ? "" : null);
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.LENGTH_SWIFT_CODE), "消息内容");
     }
 
@@ -530,10 +531,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(random.nextInt(2) % 2 == 0 ? "" : null);
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.REQUIRED_SWIFT_CODE), "消息内容");
     }
 
@@ -549,10 +550,10 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(random.nextInt(2) % 2 == 0 ? "" : null);
 
-        HttpResponse<String> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
-        String message = JsonUtils.parse(response.getBody()).get("error").toString();
+        String message = response.getBody().getObject().getString("error");
         Assert.assertTrue(message.contains(ConstantString.LENGTH_SWIFT_CODE), "消息内容");
     }
 
@@ -568,14 +569,14 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(GenerateRadom.getRandomStringAndNumber(9));
 
-        HttpResponse<String> response1 = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response1 = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response1.getStatus(), HttpStatus.SC_OK, "响应状态码");
-        String message1 = JsonUtils.parse(response1.getBody()).get("success").toString();
+        String message1 = response1.getBody().getObject().getString("success");
         Assert.assertTrue(message1.contains(ConstantString.BANK_DETAILS_SAVED), "消息内容");
 
         //重复请求相同参数
-        HttpResponse<String> response2 = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response2 = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response2.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
     }
@@ -592,14 +593,14 @@ public class BankDetailsTest extends AbstractTestNGSpringContextTests {
         bankDetails.setBsb(random.nextInt(2) % 2 == 0 ? "" : null);
         bankDetails.setAba(GenerateRadom.getRandomStringAndNumber(9));
 
-        HttpResponse<String> response1 = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response1 = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response1.getStatus(), HttpStatus.SC_OK, "响应状态码");
-        String message1 = JsonUtils.parse(response1.getBody()).get("success").toString();
+        String message1 = response1.getBody().getObject().getString("success");
         Assert.assertTrue(message1.contains(ConstantString.BANK_DETAILS_SAVED), "消息内容");
 
         //重复请求相同参数
-        HttpResponse<String> response2 = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
+        HttpResponse<JsonNode> response2 = HttpUtils.postJson(url, JsonUtils.toJson(bankDetails));
 
         Assert.assertEquals(response2.getStatus(), HttpStatus.SC_BAD_REQUEST, "响应状态码");
     }
